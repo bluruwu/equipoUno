@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orangeH1C3">#E7522E</color>
+    <color name="grayH2C11">#9EA1A1</color>
+    <color name="gray_toolbar">#424242</color>
+    <color name="black_background">#CC000000</color>
 </resources>
