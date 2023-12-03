@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997142420973",
+    "project_id": "widgetinventory",
+    "storage_bucket": "widgetinventory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997142420973:android:9eb60eaeb64c5910375be4",
+        "android_client_info": {
+          "package_name": "com.univalle.widgetinventory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDujLXdr03LffEDBOBEkDKH2Wsep7elY2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
