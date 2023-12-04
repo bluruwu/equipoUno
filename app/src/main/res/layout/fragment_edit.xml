@@ -19,35 +19,107 @@
             app:layout_constraintTop_toTopOf="parent">
         </include>
 
-        <!--EditText
-            android:id="@+id/etNombreArticulo"
+        <TextView
+            android:id="@+id/tvId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/product_name"
-            android:maxLength="40"
+            android:text="@string/edit_tv"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/contentToolbar"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="16dp"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.1"
-            android:autofillHints="" /-->
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentToolbar"
+        />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilNombreArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <EditText
+                android:id="@+id/etNombreArticulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nombre_articulo"
+                android:inputType="text"
+                android:maxLength="40"
+                android:textSize="18sp"
+
+                android:autofillHints="Nombre del producto" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tilNombreArticulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/etPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/precio"
+                android:inputType="number"
+                android:maxLength="20"
+                android:textSize="18sp"
+                android:autofillHints="Precio del producto" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tilPrecio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" >
+
+            <EditText
+                android:id="@+id/etCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cantidad"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textSize="18sp"
+                android:autofillHints="Cantidad de producto" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btEdit"
-            android:layout_width="300dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/btnEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_btn"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orangeH1C3"
 
-            android:background="@color/orangeH1C3"
-            android:text="@string/edit_bt"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="30dp"
 
-            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@id/contentToolbar" />
+            app:layout_constraintTop_toBottomOf="@id/tilCantidad" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

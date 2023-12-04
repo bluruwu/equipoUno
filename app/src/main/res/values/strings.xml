@@ -4,11 +4,19 @@
 
     <string name="back_botton">REGRESO A VENTANA ANTERIOR</string>
 
+    // GENERAL
+    <string name="codigo_producto">Codigo Producto</string>
+    <string name="nombre_articulo">Nombre Articulo</string>
+    <string name="precio">Precio</string>
+    <string name="cantidad">Cantidad</string>
+
     // ELEMENTOS PARA EDITAR PRODUCTO
     <string name="edit_tb">Editar Producto</string>
     <string name="product_name">Nombre articulo</string>
     <string name="price">Precio</string>
     <string name="amount">Cantidad</string>
-    <string name="edit_bt">Editar</string>
+    <string name="edit_btn">Editar</string>
+    <string name="edit_tv">Id: default product</string>
+
 
 </resources>
