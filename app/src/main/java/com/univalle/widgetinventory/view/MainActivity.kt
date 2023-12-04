@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         colorBarraEstado()
         sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE)
-        guardarLogin()
+        savedSession()
     }
 
     private fun colorBarraEstado() {
@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun guardarLogin() {
+    private fun savedSession () {
         val bundle = intent.extras
         val email = bundle?.getString("email")
         sharedPreferences.edit().putString("email",email).apply()
     }
 
-    private fun cerrarSesion() {
+    private fun signOff() {
         sharedPreferences.edit().clear().apply()
         FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, LoginActivity::class.java)
