@@ -11,4 +11,7 @@
     <string name="amount">Cantidad</string>
     <string name="edit_bt">Editar</string>
 
+    // MSG ERROR LOGIN
+    <string name="registration_error">Error en el registro</string>
+    <string name="login_error">Login incorrecto</string>
 </resources>
