@@ -88,7 +88,6 @@ dependencies {
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
-
     //Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
 
