@@ -10,8 +10,18 @@
     <string name="precio">Precio</string>
     <string name="cantidad">Cantidad</string>
 
+    //ELEMENTOS AGREGAR PRODUCTO
+    <string name="add_tb">Agregar Producto</string>
+    <string name="add_btn">Guardar</string>
+
+    <string name="codigo">Codigo producto</string>
+    <string name="nombre">Nombre articulo</string>
+
+
     // ELEMENTOS PARA EDITAR PRODUCTO
     <string name="edit_tb">Editar Producto</string>
+
+
     <string name="product_name">Nombre articulo</string>
     <string name="price">Precio</string>
     <string name="amount">Cantidad</string>
