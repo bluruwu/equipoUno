@@ -3,16 +3,19 @@ package com.univalle.widgetinventory.view.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentAddBinding
 import com.univalle.widgetinventory.model.Producto
+
 
 class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
@@ -32,11 +35,24 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
         setup()
-
+        binding.etCodigoProducto.addTextChangedListener(textWatcher);
+        binding.etNombreArticulo.addTextChangedListener(textWatcher);
+        binding.etPrecio.addTextChangedListener(textWatcher);
+        binding.etCantidad.addTextChangedListener(textWatcher);
         cambiarEstadoBoton(false)
-
     }
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun afterTextChanged(editable: Editable) {
+            val allFieldsFilled = !binding.etCodigoProducto.getText().toString().isEmpty() &&
+                    !binding.etNombreArticulo.getText().toString().isEmpty() &&
+                    !binding.etPrecio.getText().toString().isEmpty() &&
+                    !binding.etCantidad.getText().toString().isEmpty()
 
+            cambiarEstadoBoton(allFieldsFilled)
+        }
+    }
     private fun guardarProducto() {
         val codigo = binding.etCodigoProducto.text.toString()
         val nombre = binding.etNombreArticulo.text.toString()
