@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/nombre"
                 android:inputType="text"
+                android:textColor="@color/white"
                 android:maxLength="40"
                 android:textSize="18sp"
                 android:autofillHints="Precio del producto" />
@@ -89,6 +90,7 @@
                 android:inputType="number"
                 android:maxLength="20"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:autofillHints="Precio del producto" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -109,6 +111,7 @@
                 android:id="@+id/etCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:hint="@string/cantidad"
                 android:inputType="number"
                 android:maxLength="4"
@@ -124,7 +127,7 @@
             android:text="@string/add_btn"
             android:textColor="@color/white"
             android:backgroundTint="@color/orangeH1C3"
-
+            android:allowClickWhenDisabled="true"
             android:layout_marginTop="40dp"
             android:layout_marginHorizontal="30dp"
 

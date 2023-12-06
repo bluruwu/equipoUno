@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentAddBinding
@@ -31,6 +32,9 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
         setup()
+
+        cambiarEstadoBoton(false)
+
     }
 
     private fun guardarProducto() {
@@ -60,6 +64,28 @@ class AddFragment : Fragment() {
     private fun setup() {
         binding.btnAdd.setOnClickListener {
             guardarProducto()
+        }
+    }
+
+    private fun cambiarEstadoBoton(habilitar: Boolean) {
+        if (habilitar) {
+            // Obtener el color de texto normal (cuando el botón está habilitado)
+            val colorTextoNormal = ContextCompat.getColor(requireContext(), R.color.white)
+
+            // Habilitar el botón
+            binding.btnAdd.isEnabled = true
+
+            // Restaurar el color del texto original
+            binding.btnAdd.setTextColor(colorTextoNormal)
+        } else {
+            // Cambiar el color del texto cuando el botón está deshabilitado
+            val colorInhabilitado = ContextCompat.getColor(requireContext(), R.color.grayH2C11)
+
+            // Deshabilitar el botón
+            binding.btnAdd.isEnabled = false
+
+            // Cambiar el color del texto cuando el botón está deshabilitado
+            binding.btnAdd.setTextColor(colorInhabilitado)
         }
     }
     }
