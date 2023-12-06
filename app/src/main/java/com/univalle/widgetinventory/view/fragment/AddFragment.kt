@@ -8,8 +8,10 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,10 +38,15 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
         setup()
+        binding.contentToolbar.toolbar.findViewById<TextView>(R.id.titulo).text = resources.getString(R.string.add_tb)
         binding.etCodigoProducto.addTextChangedListener(textWatcher);
         binding.etNombreArticulo.addTextChangedListener(textWatcher);
         binding.etPrecio.addTextChangedListener(textWatcher);
         binding.etCantidad.addTextChangedListener(textWatcher);
+        binding.contentToolbar.toolbar.setNavigationOnClickListener {
+
+            findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
+        }
         cambiarEstadoBoton(false)
     }
     private val textWatcher: TextWatcher = object : TextWatcher {
