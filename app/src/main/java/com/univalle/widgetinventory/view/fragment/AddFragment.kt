@@ -13,17 +13,21 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentAddBinding
 import com.univalle.widgetinventory.model.Producto
+import com.univalle.widgetinventory.repository.InventoryRepository
+import com.univalle.widgetinventory.viewmodel.InventoryViewModel
 
 
 class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private val db = FirebaseFirestore.getInstance()
+    private val inventoryViewModel : InventoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +52,7 @@ class AddFragment : Fragment() {
             findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
         }
         cambiarEstadoBoton(false)
+
     }
     private val textWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -66,24 +71,8 @@ class AddFragment : Fragment() {
         val nombre = binding.etNombreArticulo.text.toString()
         val precio = binding.etPrecio.text.toString()
         val cantidad = binding.etCantidad.text.toString()
-
-        if (codigo.isNotEmpty() && nombre.isNotEmpty() && precio.isNotEmpty()) {
-            val producto = Producto(codigo.toInt(), nombre, precio.toInt(), cantidad.toInt())
-
-            db.collection("producto").document(producto.codigo.toString()).set(
-                hashMapOf(
-                    "codigo" to producto.codigo,
-                    "nombre" to producto.nombre,
-                    "precio" to producto.precio,
-                    "cantidad" to  producto.cantidad
-                )
-
-            )
-
-            findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
-        } else {
-            Toast.makeText(context, "Llene los campos", Toast.LENGTH_SHORT).show()
-        }
+        inventoryViewModel.guardarProducto(codigo,nombre,precio,cantidad)
+        findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
     }
     private fun setup() {
         binding.btnAdd.setOnClickListener {
