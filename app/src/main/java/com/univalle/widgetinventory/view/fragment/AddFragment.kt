@@ -1,60 +1,104 @@
 package com.univalle.widgetinventory.view.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import com.univalle.widgetinventory.R
+import com.univalle.widgetinventory.databinding.FragmentAddBinding
+import com.univalle.widgetinventory.model.Producto
+import com.univalle.widgetinventory.repository.InventoryRepository
+import com.univalle.widgetinventory.viewmodel.InventoryViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentAddBinding
+    private lateinit var sharedPreferences: SharedPreferences
+    private val inventoryViewModel : InventoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false)
+        binding = FragmentAddBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
+        setup()
+        binding.contentToolbar.toolbar.findViewById<TextView>(R.id.titulo).text = resources.getString(R.string.add_tb)
+        binding.etCodigoProducto.addTextChangedListener(textWatcher);
+        binding.etNombreArticulo.addTextChangedListener(textWatcher);
+        binding.etPrecio.addTextChangedListener(textWatcher);
+        binding.etCantidad.addTextChangedListener(textWatcher);
+        binding.contentToolbar.toolbar.setNavigationOnClickListener {
+
+            findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
+        }
+        cambiarEstadoBoton(false)
+
     }
-}
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun afterTextChanged(editable: Editable) {
+            val allFieldsFilled = !binding.etCodigoProducto.getText().toString().isEmpty() &&
+                    !binding.etNombreArticulo.getText().toString().isEmpty() &&
+                    !binding.etPrecio.getText().toString().isEmpty() &&
+                    !binding.etCantidad.getText().toString().isEmpty()
+
+            cambiarEstadoBoton(allFieldsFilled)
+        }
+    }
+    private fun guardarProducto() {
+        val codigo = binding.etCodigoProducto.text.toString()
+        val nombre = binding.etNombreArticulo.text.toString()
+        val precio = binding.etPrecio.text.toString()
+        val cantidad = binding.etCantidad.text.toString()
+        inventoryViewModel.guardarProducto(codigo,nombre,precio,cantidad)
+        findNavController().navigate(R.id.action_addFragment_to_inventoryFragment)
+    }
+    private fun setup() {
+        binding.btnAdd.setOnClickListener {
+            guardarProducto()
+        }
+    }
+
+    private fun cambiarEstadoBoton(habilitar: Boolean) {
+        if (habilitar) {
+            // Obtener el color de texto normal (cuando el botón está habilitado)
+            val colorTextoNormal = ContextCompat.getColor(requireContext(), R.color.white)
+
+            // Habilitar el botón
+            binding.btnAdd.isEnabled = true
+
+            // Restaurar el color del texto original
+            binding.btnAdd.setTextColor(colorTextoNormal)
+        } else {
+            // Cambiar el color del texto cuando el botón está deshabilitado
+            val colorInhabilitado = ContextCompat.getColor(requireContext(), R.color.grayH2C11)
+
+            // Deshabilitar el botón
+            binding.btnAdd.isEnabled = false
+
+            // Cambiar el color del texto cuando el botón está deshabilitado
+            binding.btnAdd.setTextColor(colorInhabilitado)
+        }
+    }
+    }

@@ -5,56 +5,93 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import com.univalle.widgetinventory.R
+import com.univalle.widgetinventory.databinding.FragmentEditBinding
+import com.univalle.widgetinventory.model.Producto
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentEditBinding
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit, container, false)
+        binding = FragmentEditBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
+        establecerProducto()
+        listarProducto()
+        setupEdit()
     }
+
+    private fun setupToolbar(){
+        binding.contentToolbar.toolbar.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    private fun onBackPressed() {
+        findNavController().navigate(R.id.action_editFragment_to_detailFragment)
+    }
+
+    private fun setupEdit() {
+        binding.btnEdit.setOnClickListener {
+            val codigo = binding.tvId.text.toString().substring(4)
+            val nombre = binding.etNombreArticulo.text.toString()
+            val precio = binding.etPrecio.text.toString()
+            val cantidad = binding.etCantidad.text.toString()
+
+            if (nombre.isNotEmpty() && precio.isNotEmpty() && cantidad.isNotEmpty()) {
+                val datosActualizados = hashMapOf<String, Any>(
+                    "nombre" to nombre,
+                    "precio" to precio.toInt(),
+                    "cantidad" to cantidad.toInt()
+                )
+
+                db.collection("producto").document(codigo).update(datosActualizados)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Articulo editado", Toast.LENGTH_SHORT).show()
+                        listarProducto()
+                        findNavController().navigate(R.id.action_editFragment_to_inventoryFragment)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error al editar el artículo: $e", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Llene los campos", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun establecerProducto(){
+        db.collection("producto").get().addOnSuccessListener {
+            binding.tvId.text = "Id: ${it.documents[0].get("codigo")}"
+            binding.etNombreArticulo.setText("${it.documents[0].get("nombre")}")
+            binding.etPrecio.setText("${it.documents[0].get("precio")}")
+            binding.etCantidad.setText("${it.documents[0].get("cantidad")}")
+        }
+    }
+
+    private fun listarProducto(){
+        db.collection("producto").get().addOnSuccessListener {
+
+            var data = ""
+            for (document in it.documents) {
+                data += "Codigo: ${document.get("codigo")} " +
+                        "Nombre: ${document.get("nombre")} " +
+                        "Precio: ${document.get("precio")} " +
+                        "Cantidad: ${document.get("cantidad")}\n\n"
+            }
+            binding.tvListPrueba.text = data
+
+        }
+    }
+
 }
