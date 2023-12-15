@@ -5,6 +5,7 @@
     android:theme="@style/Theme.WidgetInventory.AppWidgetContainer"
     android:orientation="horizontal"
     android:backgroundTint="@color/black_background"
+    android:id="@+id/widgetLayout"
     >
 
     <LinearLayout

@@ -15,7 +15,6 @@
         <receiver
             android:name=".widgets.InventoryWidget"
             android:exported="false"
-            android:enabled="true"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -28,7 +27,8 @@
 
         <activity
             android:name=".view.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
