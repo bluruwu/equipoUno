@@ -32,4 +32,5 @@
     // MSG ERROR LOGIN
     <string name="registration_error">Error en el registro</string>
     <string name="login_error">Login incorrecto</string>
+    <string name="inventario">Inventario</string>
 </resources>
