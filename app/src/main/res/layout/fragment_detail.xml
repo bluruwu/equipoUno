@@ -32,10 +32,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <GridLayout
+                android:layout_margin="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="4">
+                android:rowCount="4"
+                >
 
                 <TextView
                     android:id="@+id/productNameDetail"
@@ -59,6 +61,7 @@
                     android:layout_row="1"
                     android:layout_column="1"
                     android:layout_gravity="end"
+                    android:textColor="@color/orangeH1C3"
                     android:text="@string/loadingText" />
 
                 <TextView
@@ -73,6 +76,7 @@
                     android:layout_row="3"
                     android:layout_column="1"
                     android:layout_gravity="end"
+                    android:textColor="@color/orangeH1C3"
                     android:text="@string/loadingText" />
 
 
@@ -100,6 +104,7 @@
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="32dp"
             android:text="."
+
             app:icon="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
