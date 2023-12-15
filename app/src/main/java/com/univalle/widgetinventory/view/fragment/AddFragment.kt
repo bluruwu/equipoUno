@@ -58,10 +58,10 @@ class AddFragment : Fragment() {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
         override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
         override fun afterTextChanged(editable: Editable) {
-            val allFieldsFilled = !binding.etCodigoProducto.getText().toString().isEmpty() &&
-                    !binding.etNombreArticulo.getText().toString().isEmpty() &&
-                    !binding.etPrecio.getText().toString().isEmpty() &&
-                    !binding.etCantidad.getText().toString().isEmpty()
+            val allFieldsFilled = !binding.etCodigoProducto.text.toString().isEmpty() &&
+                    !binding.etNombreArticulo.text.toString().isEmpty() &&
+                    !binding.etPrecio.text.toString().isEmpty() &&
+                    !binding.etCantidad.text.toString().isEmpty()
 
             cambiarEstadoBoton(allFieldsFilled)
         }
@@ -101,4 +101,4 @@ class AddFragment : Fragment() {
             binding.btnAdd.setTextColor(colorInhabilitado)
         }
     }
-    }
+}
