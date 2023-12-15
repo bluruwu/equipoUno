@@ -4,6 +4,8 @@
 
     <string name="back_botton">REGRESO A VENTANA ANTERIOR</string>
 
+    <string name="home">Inventario</string>
+
     // GENERAL
     <string name="codigo_producto">Codigo Producto</string>
     <string name="nombre_articulo">Nombre Articulo</string>
@@ -26,7 +28,7 @@
     <string name="price">Precio</string>
     <string name="amount">Cantidad</string>
     <string name="edit_btn">Editar</string>
-    <string name="edit_tv">Id: default product</string>
+    <string name="default_message">default product</string>
 
 
     // MSG ERROR LOGIN

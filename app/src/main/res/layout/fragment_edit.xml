@@ -23,7 +23,7 @@
             android:id="@+id/tvId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_tv"
+            android:text="@string/default_message"
             android:textColor="@color/white"
             android:textSize="24sp"
 
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/precio"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLength="20"
                 android:textSize="18sp"
                 android:autofillHints="Precio del producto" />
