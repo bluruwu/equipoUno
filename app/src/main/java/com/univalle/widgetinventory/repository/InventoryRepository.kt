@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.univalle.widgetinventory.model.Producto
 import kotlinx.coroutines.tasks.await
+import android.util.Log
 
 
 class InventoryRepository {
@@ -44,7 +45,7 @@ class InventoryRepository {
         val productList = mutableListOf<Producto>()
 
         try {
-            val querySnapshot = db.collection("productos").get().await()
+            val querySnapshot = db.collection("producto").get().await()
 
             for (document in querySnapshot.documents) {
                 val producto = Producto(
@@ -55,6 +56,7 @@ class InventoryRepository {
                 )
 
                 productList.add(producto)
+                Log.i("Pase por aqui", "si")
             }
 
         } catch (e: Exception) {
