@@ -121,21 +121,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilCantidad" />
 
-        <TextView
-            android:id="@+id/tvListPrueba"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DEFAULT"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-
-            android:layout_marginTop="40dp"
-            android:layout_marginHorizontal="16dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnEdit"
-            />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,10 +1,13 @@
 package com.univalle.widgetinventory.repository
 
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.univalle.widgetinventory.model.Producto
 import kotlinx.coroutines.tasks.await
+import android.util.Log
+
 
 class InventoryRepository {
     private val db = FirebaseFirestore.getInstance()
@@ -39,6 +42,10 @@ class InventoryRepository {
     suspend fun getListProducts(): MutableList<Producto> {
         val productList = mutableListOf<Producto>()
 
+
+    suspend fun getListProducts(): MutableList<Producto> {
+        val productList = mutableListOf<Producto>()
+
         try {
             val querySnapshot = db.collection("producto").get().await()
 
@@ -59,4 +66,6 @@ class InventoryRepository {
 
         return productList
     }
+
+
 }

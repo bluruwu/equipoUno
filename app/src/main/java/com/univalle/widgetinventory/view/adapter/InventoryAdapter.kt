@@ -3,7 +3,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.univalle.widgetinventory.databinding.ProductBinding
 import com.univalle.widgetinventory.model.Producto
-import com.univalle.widgetinventory.view.viewholder.ProductViewHolder
+import com.univalle.widgetinventory.view.viewholder.InventoryViewHolder
 
 class InventoryAdapter(
     private val productList: MutableList<Producto>,
@@ -12,7 +12,7 @@ class InventoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding)
+        return InventoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {

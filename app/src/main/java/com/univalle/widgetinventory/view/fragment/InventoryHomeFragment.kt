@@ -17,6 +17,9 @@ import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentInventoryBinding
 import com.univalle.widgetinventory.model.Producto
 import com.univalle.widgetinventory.view.MainActivity
+import com.univalle.widgetinventory.R
+import com.univalle.widgetinventory.databinding.FragmentInventoryBinding
+import com.univalle.widgetinventory.view.adapter.InventoryAdapter
 import com.univalle.widgetinventory.viewmodel.InventoryViewModel
 
 class InventoryHomeFragment : Fragment() {
@@ -24,6 +27,7 @@ class InventoryHomeFragment : Fragment() {
     private var inventoryAdapter: InventoryAdapter? = null
     private lateinit var binding: FragmentInventoryBinding
     private val inventoryViewModel : InventoryViewModel by viewModels()
+    private var inventoryAdapter: InventoryAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,5 +81,25 @@ class InventoryHomeFragment : Fragment() {
         bundle.putInt("ProductID",productID)
         findNavController().navigate(R.id.action_inventoryFragment_to_editFragment, bundle)
 
+    }
+
+    private fun observerViewModel() {
+        observerListProducts()
+    }
+
+    private fun observerListProducts() {
+        inventoryViewModel.getListProducts()
+        inventoryViewModel.listProducts.observe(viewLifecycleOwner) { listaProductos ->
+            val recycler = binding.recyclerview
+            val layoutManager = LinearLayoutManager(context)
+            recycler.layoutManager = layoutManager
+
+            /*inventoryAdapter  = InventoryAdapter(listaProductos, { position, descriptionChallenge ->
+                showDeleteDialog(position, descriptionChallenge)},{position,descriptionChallenge-> showEditDialog(position,descriptionChallenge)
+            })*/
+
+            inventoryAdapter = InventoryAdapter(listaProductos)
+            recycler.adapter = inventoryAdapter
+        }
     }
 }

@@ -14,6 +14,7 @@ class InventoryViewModel: ViewModel() {
     private val _producto = MutableLiveData<Producto>()
     val listProducts: LiveData<MutableList<Producto>> get() = _listProducts
     val producto: LiveData<Producto> get() = _producto
+    val listProducts: LiveData<MutableList<Producto>> get() = _listProducts
 
     fun obtenerProducto(codigo: Int) {
         viewModelScope.launch {
