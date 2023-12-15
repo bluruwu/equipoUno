@@ -20,8 +20,8 @@ import com.univalle.widgetinventory.model.Producto
 import com.univalle.widgetinventory.viewmodel.InventoryViewModel
 
 class EditFragment : Fragment() {
+
     private lateinit var binding: FragmentEditBinding
-    private val db = FirebaseFirestore.getInstance()
     private val inventoryViewModel : InventoryViewModel by viewModels()
 
     override fun onCreateView(
@@ -43,7 +43,7 @@ class EditFragment : Fragment() {
 
         setupToolbar()
         establecerProducto(codigo)
-        listarProducto()
+        //listarProducto()
         setupEdit()
     }
 
@@ -88,7 +88,8 @@ class EditFragment : Fragment() {
             val cantidad = binding.etCantidad.text.toString()
 
             inventoryViewModel.editarProducto(codigo, nombre, precio, cantidad)
-            listarProducto()
+            findNavController().navigate(R.id.action_editFragment_to_inventoryFragment)
+
         }
     }
 
@@ -107,7 +108,7 @@ class EditFragment : Fragment() {
 
     }
 
-    private fun listarProducto(){
+    /*private fun listarProducto(){
         db.collection("producto").get().addOnSuccessListener {
 
             var data = ""
@@ -120,6 +121,6 @@ class EditFragment : Fragment() {
             binding.tvListPrueba.text = data
 
         }
-    }
+    }*/
 
 }

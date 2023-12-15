@@ -23,7 +23,7 @@
             android:id="@+id/tvId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_tv"
+            android:text="@string/default_message"
             android:textColor="@color/white"
             android:textSize="24sp"
 
