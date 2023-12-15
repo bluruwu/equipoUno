@@ -29,12 +29,6 @@ class InventoryWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
     ) {
-        val widget = context.getSharedPreferences("eyePreferences", Context.MODE_PRIVATE)
-        val eyeState = widget.getBoolean("eye_state", false)
-        val views = RemoteViews(context.packageName, R.layout.inventory_widget)
-        val changeImage = if (eyeState) R.drawable.eye else R.drawable.noeye
-        views.setImageViewResource(R.id.eyeToggle, changeImage)
-
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, inventoryRepository)
@@ -64,9 +58,9 @@ class InventoryWidget : AppWidgetProvider() {
         Log.d("Alerta", "onrecieve")
         Log.d("Alerta", "ESte es_ " + intent?.action)
         if (intent?.action == "TOGGLE_EYE") {
-            val eyeState = context?.let { getEyeState(it) }
+            val eyeState = getEyeState(context!!)
             Log.d("Alerta", "leo accion")
-            if (eyeState == true) {
+            if (eyeState) {
                 Log.d("Alerta", "Estaba encendido")
                 if (isUserLogged(context)) {
                     Log.d("Alerta", "estoy logueado")
@@ -93,7 +87,7 @@ class InventoryWidget : AppWidgetProvider() {
                 }
             } else {
                 Log.d("Alerta", "Estaba apagado")
-                saveEyeState(context!!, true)
+                saveEyeState(context, true)
                 AppWidgetManager.getInstance(context).let { appWidgetManager ->
                     val thisWidget = ComponentName(context, InventoryWidget::class.java)
                     val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
@@ -116,7 +110,7 @@ class InventoryWidget : AppWidgetProvider() {
             Log.d("Alerta", "Ahh")
         }
     }
-}
+
     internal fun updateAppWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -173,8 +167,6 @@ class InventoryWidget : AppWidgetProvider() {
 
     }
 
-
-
-
+}
 
 
