@@ -5,6 +5,7 @@
     <string name="back_botton">REGRESO A VENTANA ANTERIOR</string>
 
     <string name="home">Inventario</string>
+    <string name="id">Id: </string>
 
     // GENERAL
     <string name="codigo_producto">Codigo Producto</string>
