@@ -23,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val db =FirebaseFirestore.getInstance()
-    private var productID=0
+    private var productID=6969
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,16 +49,32 @@ class DetailFragment : Fragment() {
     }
 
     private fun setUpView(){
-        db.collection("producto").get().addOnSuccessListener {
-            val priceTemp=it.documents[0].get("precio")
-            val stockTemp=it.documents[0].get("cantidad")
-            val totalTemp=priceTemp.toString().toFloat() * stockTemp.toString().toFloat()
-            binding.priceDetail.text="$priceTemp"
-            binding.stockDetail.text="$stockTemp"
-            binding.totalPriceDetail.text="$totalTemp"
+        val connection=db.collection("producto").document(productID.toString()).get()
+        connection.addOnSuccessListener { documents->
+            if(documents.get("nombre")!=null){
+                val priceTemp=documents.get("precio")
+                val stockTemp=documents.get("cantidad")
+                val name=documents.get("nombre")
+                val totalTemp=priceTemp.toString().toFloat() * stockTemp.toString().toFloat()
+                binding.productNameDetail.text="$name"
+                binding.priceDetail.text="$priceTemp"
+                binding.stockDetail.text="$stockTemp"
+                binding.totalPriceDetail.text="$totalTemp"
+            }else{
+                findNavController().navigate(R.id.action_detailFragment_to_inventoryFragment)
+            }
+
+
+        }
+
+        binding.contentToolbar.toolbar.setNavigationOnClickListener{
+            findNavController().navigate(R.id.action_detailFragment_to_inventoryFragment)
         }
         binding.deleteProductButton.setOnClickListener {
             //invocar lo de eliminar
+            db.collection("producto").document(productID.toString()).delete().addOnSuccessListener {
+                findNavController().navigate(R.id.action_detailFragment_to_inventoryFragment)
+            }
         }
         binding.editProductButton.setOnClickListener {
             val bundle=Bundle()
