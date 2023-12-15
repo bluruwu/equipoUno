@@ -36,5 +36,27 @@ class InventoryRepository {
             null
         }
     }
+    suspend fun getListProducts(): MutableList<Producto> {
+        val productList = mutableListOf<Producto>()
 
+        try {
+            val querySnapshot = db.collection("producto").get().await()
+
+            for (document in querySnapshot.documents) {
+                val producto = Producto(
+                    document.getLong("codigo")?.toInt() ?: 0,
+                    document.getString("nombre") ?: "",
+                    document.getDouble("precio")?.toFloat() ?: 0.0f,
+                    document.getLong("cantidad")?.toInt() ?: 0
+                )
+
+                productList.add(producto)
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return productList
+    }
 }

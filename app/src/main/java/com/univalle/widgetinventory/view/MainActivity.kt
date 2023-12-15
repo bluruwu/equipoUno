@@ -33,10 +33,11 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.edit().putString("email",email).apply()
     }
 
-    private fun signOff() {
+    fun signOffAndRedirectToLogin() {
         sharedPreferences.edit().clear().apply()
         FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }

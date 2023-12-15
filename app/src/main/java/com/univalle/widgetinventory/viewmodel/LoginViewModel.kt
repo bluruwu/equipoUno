@@ -3,6 +3,8 @@ package com.univalle.widgetinventory.viewmodel
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.univalle.widgetinventory.repository.LoginRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+
 
 class LoginViewModel : ViewModel() {
     private val repository = LoginRepository()

@@ -18,6 +18,8 @@ import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentEditBinding
 import com.univalle.widgetinventory.model.Producto
 import com.univalle.widgetinventory.viewmodel.InventoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
+
 
 class EditFragment : Fragment() {
 

@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 
 class InventoryViewModel: ViewModel() {
     private val repository = InventoryRepository()
-
+    private val _listProducts = MutableLiveData<MutableList<Producto>>()
     private val _producto = MutableLiveData<Producto>()
+    val listProducts: LiveData<MutableList<Producto>> get() = _listProducts
     val producto: LiveData<Producto> get() = _producto
 
     fun obtenerProducto(codigo: Int) {
@@ -28,7 +29,11 @@ class InventoryViewModel: ViewModel() {
             }
         }
     }
-
+    fun getListProducts(){
+        viewModelScope.launch {
+            _listProducts.value = repository.getListProducts()
+        }
+    }
 
     fun guardarProducto(codigo: String, nombre: String, precio: String, cantidad: String) {
         if (codigo.isNotEmpty() && nombre.isNotEmpty() && precio.isNotEmpty()) {
