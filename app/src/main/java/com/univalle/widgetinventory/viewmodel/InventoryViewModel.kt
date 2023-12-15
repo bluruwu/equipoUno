@@ -21,7 +21,7 @@ class InventoryViewModel: ViewModel() {
                 val producto = Producto(
                     codigo,
                     documento.getString("nombre") ?: "",
-                    documento.getDouble("precio")?.toInt() ?: 0,
+                    documento.getDouble("precio")?.toFloat() ?: 0.0f,
                     documento.getLong("cantidad")?.toInt() ?: 0
                 )
                 _producto.value = producto
@@ -33,7 +33,7 @@ class InventoryViewModel: ViewModel() {
     fun guardarProducto(codigo: String, nombre: String, precio: String, cantidad: String) {
         if (codigo.isNotEmpty() && nombre.isNotEmpty() && precio.isNotEmpty()) {
             viewModelScope.launch {
-                val producto = Producto(codigo.toInt(), nombre, precio.toInt(), cantidad.toInt())
+                val producto = Producto(codigo.toInt(), nombre, precio.toFloat(), cantidad.toInt())
                 repository.guardarProducto(producto)
             }
         }
@@ -42,7 +42,7 @@ class InventoryViewModel: ViewModel() {
     fun editarProducto(codigo: String, nombre: String, precio: String, cantidad: String) {
         if (nombre.isNotEmpty() && precio.isNotEmpty() && cantidad.isNotEmpty()) {
             viewModelScope.launch {
-                val producto = Producto(codigo.toInt(), nombre, precio.toInt(), cantidad.toInt())
+                val producto = Producto(codigo.toInt(), nombre, precio.toFloat(), cantidad.toInt())
                 repository.editarProducto(codigo, producto)
             }
         }

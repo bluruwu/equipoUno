@@ -35,7 +35,7 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val codigo = 1223
+        val codigo = 6494
 
         binding.etNombreArticulo.addTextChangedListener(textWatcher);
         binding.etPrecio.addTextChangedListener(textWatcher);
