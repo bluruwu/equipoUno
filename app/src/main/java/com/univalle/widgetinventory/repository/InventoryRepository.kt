@@ -17,4 +17,16 @@ class InventoryRepository {
             )
         ).await()
     }
+
+    suspend fun getTotalArticles(): Float{
+        val getArticles = db.collection("producto").get().await()
+        var totalFinal = 0.0f
+        for (document in getArticles){
+            val precio = document.getDouble("precio")?.toFloat() ?:0.0f
+            val cantidad = document.getLong("cantidad")?.toFloat() ?:0.0f
+            val total = precio * cantidad!!
+            totalFinal += total
+        }
+        return totalFinal
+    }
 }

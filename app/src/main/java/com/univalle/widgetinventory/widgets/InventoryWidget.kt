@@ -10,10 +10,17 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.widget.RemoteViews
 import com.univalle.widgetinventory.R
+import com.univalle.widgetinventory.repository.InventoryRepository
 import com.univalle.widgetinventory.view.LoginActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class InventoryWidget : AppWidgetProvider() {
+    private lateinit var inventoryRepository: InventoryRepository
     private lateinit var sharedPreferences: SharedPreferences
     private val eyePreferences = "eyePreferences"
     override fun onUpdate(
@@ -23,7 +30,7 @@ class InventoryWidget : AppWidgetProvider() {
     ) {
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+            updateAppWidget(context, appWidgetManager, appWidgetId, inventoryRepository)
         }
     }
     private fun isUserLogged(context: Context): Boolean {
@@ -59,7 +66,7 @@ class InventoryWidget : AppWidgetProvider() {
                         val thisWidget = ComponentName(context, InventoryWidget::class.java)
                         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
                         for (appWidgetId in appWidgetIds) {
-                            updateAppWidget(context, appWidgetManager, appWidgetId)
+                            updateAppWidget(context, appWidgetManager, appWidgetId, inventoryRepository)
                         }
                     }
                 } else{
@@ -67,6 +74,7 @@ class InventoryWidget : AppWidgetProvider() {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         putExtra("Redirect", true )
                     }
+                    context.startActivity(login)
                     Log.d("Alerta", "no estoy logueado")
                 }
             } else {
@@ -76,7 +84,7 @@ class InventoryWidget : AppWidgetProvider() {
                     val thisWidget = ComponentName(context, InventoryWidget::class.java)
                     val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
                     for (appWidgetId in appWidgetIds) {
-                        updateAppWidget(context, appWidgetManager, appWidgetId)
+                        updateAppWidget(context, appWidgetManager, appWidgetId, inventoryRepository)
                     }
                 }
             }
@@ -91,22 +99,40 @@ class InventoryWidget : AppWidgetProvider() {
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
-    appWidgetId: Int
+    appWidgetId: Int,
+    inventoryRepository: InventoryRepository
 ) {
     Log.d("Alerta", "HOLAAAAAAA")
     val widget = context.getSharedPreferences("eyePreferences", Context.MODE_PRIVATE)
     val eyeState = widget.getBoolean("eye_state", false)
+
     val changeImage = if (eyeState) R.drawable.eye else R.drawable.noeye
     val views = RemoteViews(context.packageName, R.layout.inventory_widget)
     views.setImageViewResource(R.id.eyeToggle, changeImage)
+
+    if(eyeState){
+        views.setTextViewText(R.id.value, "$ * * * *")
+        appWidgetManager.updateAppWidget(appWidgetId, views)
+    } else {
+        CoroutineScope(Dispatchers.IO).launch {
+            val total = inventoryRepository.getTotalArticles()
+            val format = NumberFormat.getNumberInstance(Locale("es", "ES"))
+            format.minimumFractionDigits=2
+            val formatTotal = format.format(total)
+            CoroutineScope(Dispatchers.Main).launch {
+                views.setTextViewText(R.id.value, "$ $formatTotal")
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            }
+        }
+    }
+
     val intentEye = Intent(context, InventoryWidget::class.java)
     intentEye.action = "TOGGLE_EYE"
-
     val pendingIntentEye = PendingIntent.getBroadcast(
         context,
         0,
         intentEye,
-        PendingIntent.FLAG_MUTABLE
+        PendingIntent.FLAG_IMMUTABLE
     )
     views.setOnClickPendingIntent(R.id.eyeToggle, pendingIntentEye)
 
@@ -117,12 +143,8 @@ internal fun updateAppWidget(
         context,
         1,
         intentOpenInv,
-        PendingIntent.FLAG_MUTABLE
+        PendingIntent.FLAG_IMMUTABLE
     )
-    views.apply {
-        setOnClickPendingIntent(R.id.config, pendingIntentOpenInv)
-    }
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, views)
+    views.setOnClickPendingIntent(R.id.configImage, pendingIntentOpenInv)
 }
 

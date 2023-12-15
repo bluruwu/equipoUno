@@ -4,7 +4,7 @@
     android:layout_height="120dp"
     android:theme="@style/Theme.WidgetInventory.AppWidgetContainer"
     android:orientation="horizontal"
-    android:background="@drawable/app_widget_background"
+    android:backgroundTint="@color/black_background"
     >
 
     <LinearLayout
@@ -61,6 +61,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$ * * * *"
@@ -84,11 +85,11 @@
                 android:layout_marginRight="10dp"
                 />
             <ImageView
+                android:id="@+id/configImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_settings"
                 android:layout_gravity="end"
-                android:id="@+id/config"
                 />
         </LinearLayout>
 
