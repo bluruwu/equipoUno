@@ -28,6 +28,13 @@
     <string name="edit_btn">Editar</string>
     <string name="edit_tv">Id: default product</string>
 
+    //Detail Fragment
+    <string name="priceString">Precio de la unidad:</string>
+    <string name="stockString">Cantidad Disponible:</string>
+    <string name="totalString">Total</string>
+    <string name="deleteDetailProductString">Eliminar</string>
+    //loading
+    <string name="loadingText">Cargando…</string>
 
     // MSG ERROR LOGIN
     <string name="registration_error">Error en el registro</string>
