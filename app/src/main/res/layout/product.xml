@@ -31,6 +31,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text = "@string/default_message"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -41,6 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text = "@string/id"
+                    android:textColor="@color/black"
                     card_view:layout_constraintTop_toBottomOf="@id/product_name"
                     card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -52,15 +55,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text = "@string/default_message"
+                    android:textColor="@color/black"
                     card_view:layout_constraintTop_toBottomOf="@id/product_name"
                     card_view:layout_constraintStart_toEndOf="@id/ids"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="8dp" />
 
                 <TextView
+                    android:id="@+id/signo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text = "$ "
+                    android:textColor="@color/orangeH1C3"
+                    android:textStyle="bold"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintEnd_toStartOf="@id/product_price"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="8dp" />
+
+                <TextView
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:textColor="@color/orangeH1C3"
+                    android:textStyle="bold"
                     android:text = "@string/default_message"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"

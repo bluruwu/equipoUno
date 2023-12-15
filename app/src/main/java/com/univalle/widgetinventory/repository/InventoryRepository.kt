@@ -56,7 +56,6 @@ class InventoryRepository {
                 )
 
                 productList.add(producto)
-                Log.i("Pase por aqui", "si")
             }
 
         } catch (e: Exception) {
