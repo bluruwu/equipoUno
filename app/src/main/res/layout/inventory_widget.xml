@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Widget.WidgetInventory.AppWidget.Container"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="120dp"
     android:theme="@style/Theme.WidgetInventory.AppWidgetContainer"
     android:orientation="horizontal"
     android:background="@drawable/app_widget_background"
@@ -14,6 +14,7 @@
         android:layout_marginLeft="10dp">
 
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/ic_tool"
@@ -51,8 +52,9 @@
                 android:layout_gravity="end"
                 />
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/eyeToggle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/eye"
                 android:layout_gravity="end"
                 />
@@ -86,6 +88,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_settings"
                 android:layout_gravity="end"
+                android:id="@+id/config"
                 />
         </LinearLayout>
 
